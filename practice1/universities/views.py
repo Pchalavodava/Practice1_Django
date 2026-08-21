@@ -24,7 +24,6 @@ class UniversityViewSet(ModelViewSet):
             'average_duration': average_duration['duration_weeks__avg']
         })
 
-
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer

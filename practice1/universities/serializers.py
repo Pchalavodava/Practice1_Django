@@ -42,3 +42,4 @@ class UniversityWithCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = University
         fields = ['name', 'country', 'courses']
+

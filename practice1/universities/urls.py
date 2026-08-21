@@ -13,3 +13,4 @@ urlpatterns = [
     path('', include(router.urls)),
     path('universities/<int:university_id>/courses/', views.UniversityCoursesView.as_view(), name='university-courses')
 ]
+
