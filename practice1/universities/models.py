@@ -37,5 +37,3 @@ class UniversityCourse(models.Model):
 
     def __str__(self):
         return f'{self.university}: {self.course} - {self.semester}. Duration: {self.duration_weeks}'
-
-

@@ -16,3 +16,4 @@ class CourseAdmin(admin.ModelAdmin):
 @admin.register(models.UniversityCourse)
 class UniversityCourseAdmin(admin.ModelAdmin):
     list_display = ['university', 'course', 'semester', 'duration_weeks']
+

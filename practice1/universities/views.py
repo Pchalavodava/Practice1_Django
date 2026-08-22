@@ -2,7 +2,7 @@ from django.db.models import Avg
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import response
 from rest_framework.decorators import action
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -24,19 +24,21 @@ class UniversityViewSet(ModelViewSet):
             'average_duration': average_duration['duration_weeks__avg']
         })
 
+
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
 
 class UniversityCourseViewSet(ModelViewSet):
-    queryset = UniversityCourse.objects.order_by('duration_weeks')
+    queryset = UniversityCourse.objects.all()
     serializer_class = UniversityCourseSerializer
 
-    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
 
     search_fields = ['university__name', 'course__title']
     ordering_fields = ['duration_weeks']
+    ordering = ['duration_weeks']
     filterset_fields = {
         'semester': ['exact', 'in'],
         'course__title': ['exact', 'icontains'],
@@ -52,3 +54,4 @@ class UniversityCoursesView(RetrieveAPIView):
 
     lookup_field = 'id'
     lookup_url_kwarg = 'university_id'
+

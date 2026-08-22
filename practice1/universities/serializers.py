@@ -18,14 +18,17 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class UniversityCourseSerializer(serializers.ModelSerializer):
-    university = UniversitySerializer()
-    course = CourseSerializer()
+    university_read_only = UniversitySerializer(source='university', read_only=True)
+    course_read_only = CourseSerializer(source='course', read_only=True)
+
+    university = serializers.PrimaryKeyRelatedField(queryset=University.objects.all(), write_only=True)
+    course = serializers.PrimaryKeyRelatedField(queryset=Course.objects.all(), write_only=True)
 
     class Meta:
         model = UniversityCourse
         read_only_fields = ['id']
-        fields = ['id', 'university', 'course', 'semester', 'duration_weeks']
-        depth = 1
+        fields = ['id', 'university', 'course', 'semester', 'duration_weeks', 'university_read_only',
+                  'course_read_only']
 
 
 class UniversityCourseInfoSerializer(serializers.ModelSerializer):
@@ -42,4 +45,3 @@ class UniversityWithCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = University
         fields = ['name', 'country', 'courses']
-
